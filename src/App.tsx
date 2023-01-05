@@ -2,18 +2,12 @@ import React, {useState, type PropsWithChildren} from 'react';
 import {Button, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View} from 'react-native';
 import {ScrollPicker} from './ScrollPicker';
 
-const DATA: (number | null)[] = [];
+const DATA: (number)[] = [];
 const DISPLAY_ITEMS = 5;
 const OFFSET_NUMBER = Math.floor(DISPLAY_ITEMS / 2);
 
-for (let i = 0; i < OFFSET_NUMBER; i++) {
-  DATA.push(null);
-}
 for (let i = 0; i <= 60; i++) {
   DATA.push(i);
-}
-for (let i = 0; i < OFFSET_NUMBER; i++) {
-  DATA.push(null);
 }
 
 const App = () => {

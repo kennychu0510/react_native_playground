@@ -13,7 +13,7 @@ type Props = {
 export const ScrollPicker = (props: Props) => {
   const {displayItems = 5, data, selected, setSelected} = props;
   const OFFSET_NUMBER = Math.floor(displayItems / 2);
-
+  const DATA = [...new Array(OFFSET_NUMBER).fill(null), ...data, ...new Array(OFFSET_NUMBER).fill(null)]
   const scrollY = useRef(new Animated.Value(0)).current;
   const listRef = useRef<any>();
 
@@ -47,7 +47,7 @@ export const ScrollPicker = (props: Props) => {
         onMomentumScrollEnd={(e) => {
           setSelected(Math.floor(e.nativeEvent.contentOffset.y/ITEM_HEIGHT))
         }}
-        data={data}
+        data={DATA}
         renderItem={({item, index}) => {
           const actualIndex = index - OFFSET_NUMBER;
           const inputRange: number[] = [];

@@ -10,12 +10,15 @@ type Props = {
   data: { label: string; value: string }[];
 };
 
+const SCREEN_HEIGHT = Dimensions.get('screen').height;
+
 const ITEM_HEIGHT = 30;
 export const DropdownMenu = (props: Props) => {
   const { selected, setSelected, placeholder: placeholder = 'Nothing Selected', data } = props;
   const headerHeight = useHeaderHeight();
   const statusBarHeight = StatusBar.currentHeight || 0;
   const flatListRef = useRef<FlatList>(null);
+  const [renderAtTop, setRenderAtTop] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<View>(null);
@@ -42,18 +45,38 @@ export const DropdownMenu = (props: Props) => {
         pageX,
         pageY,
       });
+      findRenderPosition(pageY + height);
     });
     setIsOpen(true);
   }
 
+  function findRenderPosition(y: number) {
+    const renderedItems = Math.min(data.length, Math.floor(SCREEN_HEIGHT / 2 / ITEM_HEIGHT));
+    if (y + renderedItems * ITEM_HEIGHT > SCREEN_HEIGHT) {
+      setRenderAtTop(true);
+    } else {
+      setRenderAtTop(false);
+    }
+  }
+
   function closeMenu() {
     setIsOpen(false);
+    setPosition({
+      pageX: 0,
+      pageY: 0,
+      width: 0,
+      height: 0,
+    });
   }
 
   function onItemSelect(value: string) {
     setSelected(value);
     closeMenu();
   }
+
+  const positionReady = () => {
+    return position.width !== 0;
+  };
 
   const carrotAnimation = useRef(new Animated.Value(0)).current;
 
@@ -94,16 +117,17 @@ export const DropdownMenu = (props: Props) => {
           </Animated.View>
         </View>
       </TouchableOpacity>
-      {isOpen && (
+      {isOpen && positionReady() && (
         <Modal transparent={true} visible={isOpen}>
           <TouchableWithoutFeedback onPress={closeMenu}>
             <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.2)' }}>
               <FlatList
                 ref={flatListRef}
                 onLayout={() => {
+                  const itemIndex = data.findIndex(item => item.value === selected);
                   flatListRef.current?.scrollToIndex({
-                    animated: false,
-                    index: data.findIndex(item => item.value === selected),
+                    animated: true,
+                    index: itemIndex >= 0 ? itemIndex : 0,
                   });
                 }}
                 getItemLayout={(data, index) => ({
@@ -115,10 +139,16 @@ export const DropdownMenu = (props: Props) => {
                   styles.menu,
                   {
                     position: 'absolute',
-                    top: position.pageY + position.height,
                     left: position.pageX,
                     width: position.width,
                   },
+                  renderAtTop
+                    ? {
+                        bottom: SCREEN_HEIGHT - position.pageY,
+                      }
+                    : {
+                        top: position.pageY + position.height,
+                      },
                 ]}
                 snapToInterval={ITEM_HEIGHT}
                 data={data}
@@ -162,7 +192,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowOffset: { width: 0, height: 1 },
     borderRadius: 10,
-    maxHeight: Math.floor(Dimensions.get('screen').height / 2 / ITEM_HEIGHT) * ITEM_HEIGHT,
+    maxHeight: Math.floor(SCREEN_HEIGHT / 2 / ITEM_HEIGHT) * ITEM_HEIGHT,
     zIndex: 2,
     width: '100%',
     backgroundColor: 'white',

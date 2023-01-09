@@ -9,11 +9,16 @@ type Props = {
   data: any[];
   selected: any;
   setSelected: React.Dispatch<React.SetStateAction<number>>;
+  showBorder?: boolean;
 };
 export const ScrollPicker = (props: Props) => {
-  const {displayItems = 5, data, selected, setSelected} = props;
+  const {data, selected, setSelected, showBorder: showBorder = false} = props;
+  let displayItems = props.displayItems || 5;
+  if (displayItems % 2 === 0) {
+    displayItems--;
+  }
   const OFFSET_NUMBER = Math.floor(displayItems / 2);
-  const DATA = [...new Array(OFFSET_NUMBER).fill(null), ...data, ...new Array(OFFSET_NUMBER).fill(null)]
+  const DATA = [...new Array(OFFSET_NUMBER).fill(null), ...data, ...new Array(OFFSET_NUMBER).fill(null)];
   const scrollY = useRef(new Animated.Value(0)).current;
   const listRef = useRef<any>();
 
@@ -22,7 +27,7 @@ export const ScrollPicker = (props: Props) => {
     ref.scrollToIndex({index: index - OFFSET_NUMBER, animated: true});
   }
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {height: displayItems * ITEM_HEIGHT, borderWidth: showBorder ? 1 : 0}]}>
       <Animated.FlatList
         onLayout={() => {
           const ref = listRef.current as FlatList;
@@ -44,8 +49,8 @@ export const ScrollPicker = (props: Props) => {
           ],
           {useNativeDriver: false},
         )}
-        onMomentumScrollEnd={(e) => {
-          setSelected(Math.floor(e.nativeEvent.contentOffset.y/ITEM_HEIGHT))
+        onMomentumScrollEnd={e => {
+          setSelected(Math.floor(e.nativeEvent.contentOffset.y / ITEM_HEIGHT));
         }}
         data={DATA}
         renderItem={({item, index}) => {
@@ -62,11 +67,11 @@ export const ScrollPicker = (props: Props) => {
           // const inputRangeAdjacent = [(actualIndex - 1) * ITEM_HEIGHT, actualIndex * ITEM_HEIGHT, (actualIndex + 1) * ITEM_HEIGHT]
           const opacity = scrollY.interpolate({
             inputRange,
-            outputRange: [0.4, 0.4, 1, 0.4, 0.4],
+            outputRange: [...new Array(OFFSET_NUMBER).fill(0.4), 1, ...new Array(OFFSET_NUMBER).fill(0.4)],
           });
           const fontScale = scrollY.interpolate({
             inputRange,
-            outputRange: [1, 1, 2, 1, 1],
+            outputRange: [...new Array(OFFSET_NUMBER).fill(1), 2, ...new Array(OFFSET_NUMBER).fill(1)],
           });
           // const transformZ = scrollY.interpolate({
           //   inputRange,
@@ -81,19 +86,16 @@ export const ScrollPicker = (props: Props) => {
             </TouchableOpacity>
           );
         }}></Animated.FlatList>
-      <View pointerEvents="none" style={styles.highlightPanel}></View>
+      <View pointerEvents="none" style={[styles.highlightPanel, {top: OFFSET_NUMBER * ITEM_HEIGHT}]}></View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: ITEM_HEIGHT * 5,
-    width: 100,
+    width: '100%',
     borderColor: 'black',
-    borderWidth: 1,
     paddingHorizontal: 20,
-    // backgroundColor: 'grey',
   },
   itemContainer: {
     height: ITEM_HEIGHT,
@@ -113,6 +115,5 @@ const styles = StyleSheet.create({
     zIndex: 2,
     left: 0,
     right: 0,
-    top: 2 * ITEM_HEIGHT,
   },
 });

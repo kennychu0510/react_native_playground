@@ -16,7 +16,7 @@ export const ScrollPickerPage = () => {
         <Text style={{ fontSize: 16 }}>Current Index: </Text>
         <Text style={{ fontSize: 16 }}>{selectedIndex}</Text>
       </View>
-      <ScrollPicker data={DATA} selected={selectedIndex} setSelected={setSelectedIndex} displayItems={5} />
+      <ScrollPicker data={DATA} selected={selectedIndex} setSelected={setSelectedIndex} displayItems={7} />
     </SafeAreaView>
   );
 };

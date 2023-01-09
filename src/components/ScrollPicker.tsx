@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Animated, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const FONT_SIZE = 16;
+const FONT_SIZE = 18;
 const ITEM_HEIGHT = 50;
 
 type Props = {
@@ -78,14 +78,25 @@ export const ScrollPicker = (props: Props) => {
             inputRange,
             outputRange: [...new Array(OFFSET_NUMBER).fill(1), 2, ...new Array(OFFSET_NUMBER).fill(1)],
           });
-          // const transformZ = scrollY.interpolate({
-          //   inputRange,
-          //   outputRange: []
-          // })
+
+          const rotationZOutputRange: string[] = [];
+          const MAX_ROTATION = 60;
+          const rotationDiff = MAX_ROTATION / OFFSET_NUMBER;
+          for (let i = 0; i < OFFSET_NUMBER; i++) {
+            rotationZOutputRange.push(`${MAX_ROTATION - rotationDiff * i}deg`);
+          }
+          rotationZOutputRange.push('0deg');
+          for (let i = 1; i <= OFFSET_NUMBER; i++) {
+            rotationZOutputRange.push(`${rotationDiff * -i}deg`);
+          }
+          const rotationX = scrollY.interpolate({
+            inputRange,
+            outputRange: rotationZOutputRange,
+          });
 
           return (
             <TouchableOpacity onPress={() => scrollToItem(index)}>
-              <Animated.View style={[styles.itemContainer, { opacity }]}>
+              <Animated.View style={[styles.itemContainer, { opacity, transform: [{ rotateX: rotationX }] }]}>
                 <Animated.Text style={[styles.itemText, { transform: [{ scale: fontScale }] }]}>{item}</Animated.Text>
               </Animated.View>
             </TouchableOpacity>

@@ -6,11 +6,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScrollPickerPage } from './pages/ScrollPickerPage';
 import { Landing } from './pages/Landing';
 
-const DATA: number[] = [];
-for (let i = 0; i <= 60; i++) {
-  DATA.push(i);
-}
-
 export type RootStackParamList = {
   Landing: undefined;
   ScrollPicker: undefined;

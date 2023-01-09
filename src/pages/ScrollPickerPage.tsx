@@ -8,7 +8,7 @@ for (let i = 0; i <= 60; i++) {
 }
 
 export const ScrollPickerPage = () => {
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(5);
 
   return (
     <SafeAreaView style={{ justifyContent: 'center', flex: 1, alignItems: 'center' }}>
@@ -16,7 +16,7 @@ export const ScrollPickerPage = () => {
         <Text style={{ fontSize: 16 }}>Current Index: </Text>
         <Text style={{ fontSize: 16 }}>{selectedIndex}</Text>
       </View>
-      <ScrollPicker data={DATA} selected={selectedIndex} setSelected={setSelectedIndex} displayItems={7} />
+      <ScrollPicker data={DATA} selected={selectedIndex} setSelected={setSelectedIndex} displayItems={5} />
     </SafeAreaView>
   );
 };

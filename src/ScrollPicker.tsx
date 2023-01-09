@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
-import {Animated, FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const FONT_SIZE = 16;
 const ITEM_HEIGHT = 50;
@@ -12,7 +12,7 @@ type Props = {
   showBorder?: boolean;
 };
 export const ScrollPicker = (props: Props) => {
-  const {data, selected, setSelected, showBorder: showBorder = false} = props;
+  const { data, selected, setSelected, showBorder: showBorder = false } = props;
   let displayItems = props.displayItems || 5;
   if (displayItems % 2 === 0) {
     displayItems--;
@@ -24,14 +24,14 @@ export const ScrollPicker = (props: Props) => {
 
   function scrollToItem(index: number) {
     const ref = listRef.current as FlatList;
-    ref.scrollToIndex({index: index - OFFSET_NUMBER, animated: true});
+    ref.scrollToIndex({ index: index - OFFSET_NUMBER, animated: true });
   }
   return (
-    <View style={[styles.container, {height: displayItems * ITEM_HEIGHT, borderWidth: showBorder ? 1 : 0}]}>
+    <View style={[styles.container, { height: displayItems * ITEM_HEIGHT, borderWidth: showBorder ? 1 : 0 }]}>
       <Animated.FlatList
         onLayout={() => {
           const ref = listRef.current as FlatList;
-          ref.scrollToIndex({index: selected, animated: true});
+          ref.scrollToIndex({ index: selected, animated: true });
         }}
         ref={listRef}
         style={styles.list}
@@ -52,13 +52,13 @@ export const ScrollPicker = (props: Props) => {
               },
             },
           ],
-          {useNativeDriver: false},
+          { useNativeDriver: false },
         )}
         onMomentumScrollEnd={e => {
           setSelected(Math.floor(e.nativeEvent.contentOffset.y / ITEM_HEIGHT));
         }}
         data={DATA}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           const actualIndex = index - OFFSET_NUMBER;
           const inputRange: number[] = [];
           for (let i = 0, _offset = actualIndex - OFFSET_NUMBER; i < displayItems; i++, _offset++) {
@@ -85,13 +85,13 @@ export const ScrollPicker = (props: Props) => {
 
           return (
             <TouchableOpacity onPress={() => scrollToItem(index)}>
-              <Animated.View style={[styles.itemContainer, {opacity}]}>
-                <Animated.Text style={[styles.itemText, {transform: [{scale: fontScale}]}]}>{item}</Animated.Text>
+              <Animated.View style={[styles.itemContainer, { opacity }]}>
+                <Animated.Text style={[styles.itemText, { transform: [{ scale: fontScale }] }]}>{item}</Animated.Text>
               </Animated.View>
             </TouchableOpacity>
           );
         }}></Animated.FlatList>
-      <View pointerEvents="none" style={[styles.highlightPanel, {top: OFFSET_NUMBER * ITEM_HEIGHT}]}></View>
+      <View pointerEvents="none" style={[styles.highlightPanel, { top: OFFSET_NUMBER * ITEM_HEIGHT }]}></View>
     </View>
   );
 };

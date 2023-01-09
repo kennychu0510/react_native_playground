@@ -1,6 +1,6 @@
 import React, { useState, type PropsWithChildren } from 'react';
 import { Button, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
-import { ScrollPicker } from './ScrollPicker';
+import { ScrollPicker } from './components/ScrollPicker';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScrollPickerPage } from './pages/ScrollPickerPage';

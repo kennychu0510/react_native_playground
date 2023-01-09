@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, Text } from 'react-native';
-import { ScrollPicker } from '../ScrollPicker';
+import { ScrollPicker } from '../components/ScrollPicker';
 
 const DATA: number[] = [];
 for (let i = 0; i <= 60; i++) {

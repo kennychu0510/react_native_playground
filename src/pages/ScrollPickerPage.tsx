@@ -14,7 +14,7 @@ export const ScrollPickerPage = () => {
     <SafeAreaView style={{ justifyContent: 'center', flex: 1, alignItems: 'center' }}>
       <View style={{ flexDirection: 'row', marginBottom: 10 }}>
         <Text style={{ fontSize: 16 }}>Current Index: </Text>
-              <Text style={{ fontSize: 16 }}>{selectedIndex}</Text>
+        <Text style={{ fontSize: 16 }}>{selectedIndex}</Text>
       </View>
       <ScrollPicker data={DATA} selected={selectedIndex} setSelected={setSelectedIndex} displayItems={7} />
     </SafeAreaView>

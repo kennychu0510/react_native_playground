@@ -11,7 +11,7 @@ for (let i = 0; i <= 60; i++) {
   DATA.push(i);
 }
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Landing: undefined,
   ScrollPicker: undefined,
 }

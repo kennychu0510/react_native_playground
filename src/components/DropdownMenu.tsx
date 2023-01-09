@@ -51,12 +51,16 @@ export const DropdownMenu = (props: Props) => {
   }
 
   function findRenderPosition(y: number) {
-    const renderedItems = Math.min(data.length, Math.floor(SCREEN_HEIGHT / 2 / ITEM_HEIGHT));
+    const renderedItems = getRenderedItems();
     if (y + renderedItems * ITEM_HEIGHT > SCREEN_HEIGHT) {
       setRenderAtTop(true);
     } else {
       setRenderAtTop(false);
     }
+  }
+
+  function getRenderedItems() {
+    return Math.min(data.length, Math.floor(SCREEN_HEIGHT / 2 / ITEM_HEIGHT));
   }
 
   function closeMenu() {
@@ -121,7 +125,7 @@ export const DropdownMenu = (props: Props) => {
         <Modal transparent={true} visible={isOpen}>
           <TouchableWithoutFeedback onPress={closeMenu}>
             <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.2)' }}>
-              <FlatList
+              <Animated.FlatList
                 ref={flatListRef}
                 onLayout={() => {
                   const itemIndex = data.findIndex(item => item.value === selected);
@@ -141,6 +145,7 @@ export const DropdownMenu = (props: Props) => {
                     position: 'absolute',
                     left: position.pageX,
                     width: position.width,
+                    maxHeight: getRenderedItems() * ITEM_HEIGHT,
                   },
                   renderAtTop
                     ? {
@@ -160,7 +165,7 @@ export const DropdownMenu = (props: Props) => {
                       </View>
                     </TouchableOpacity>
                   );
-                }}></FlatList>
+                }}></Animated.FlatList>
             </View>
           </TouchableWithoutFeedback>
         </Modal>

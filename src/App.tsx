@@ -6,11 +6,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScrollPickerPage } from './pages/ScrollPickerPage';
 import { Landing } from './pages/Landing';
 import { DropdownMenuPage } from './pages/DropdownMenuPage';
+import { Roulette } from './pages/Roulette';
 
 export type RootStackParamList = {
   Landing: undefined;
   ScrollPicker: undefined;
   DropdownMenu: undefined;
+  Roulette: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -22,6 +24,7 @@ const App = () => {
         <Stack.Screen name="Landing" component={Landing} options={{ title: 'Playground' }} />
         <Stack.Screen name="ScrollPicker" component={ScrollPickerPage} />
         <Stack.Screen name="DropdownMenu" component={DropdownMenuPage} />
+        <Stack.Screen name="Roulette" component={Roulette} />
       </Stack.Navigator>
     </NavigationContainer>
   );

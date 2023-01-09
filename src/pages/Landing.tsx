@@ -6,17 +6,22 @@ import { RootStackParamList } from '../App';
 
 type RootScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
+const PAGES = [
+  { name: 'Scroll Picker', component: 'ScrollPicker' as const },
+  { name: 'Dropdown Menu', component: 'DropdownMenu' as const },
+  { name: 'Roulette', component: 'Roulette' as const },
+];
+
 export const Landing = () => {
   const navigation = useNavigation<RootScreenNavigationProp>();
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <View style={styles.button}>
-          <Button onPress={() => navigation.navigate('ScrollPicker')} title="Scroll Picker"></Button>
-        </View>
-        <View style={styles.button}>
-          <Button onPress={() => navigation.navigate('DropdownMenu')} title="Dropdown Menu"></Button>
-        </View>
+        {PAGES.map((item, idx) => (
+          <View key={idx} style={styles.button}>
+            <Button onPress={() => navigation.navigate(item.component)} title={item.name}></Button>
+          </View>
+        ))}
       </View>
     </SafeAreaView>
   );

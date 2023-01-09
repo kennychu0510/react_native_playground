@@ -11,7 +11,6 @@ export const Landing = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>This is React Native Playground</Text>
         <View style={styles.button}>
           <Button onPress={() => navigation.navigate('ScrollPicker')} title="Scroll Picker"></Button>
         </View>

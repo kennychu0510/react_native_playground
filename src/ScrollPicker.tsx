@@ -37,6 +37,11 @@ export const ScrollPicker = (props: Props) => {
         style={styles.list}
         showsVerticalScrollIndicator={false}
         snapToInterval={ITEM_HEIGHT}
+        getItemLayout={(data, index) => ({
+          length: ITEM_HEIGHT,
+          offset: ITEM_HEIGHT * index,
+          index,
+        })}
         onScroll={Animated.event(
           [
             {

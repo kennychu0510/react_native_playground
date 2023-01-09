@@ -5,10 +5,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScrollPickerPage } from './pages/ScrollPickerPage';
 import { Landing } from './pages/Landing';
+import { DropdownMenuPage } from './pages/DropdownMenuPage';
 
 export type RootStackParamList = {
   Landing: undefined;
   ScrollPicker: undefined;
+  DropdownMenu: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -19,6 +21,7 @@ const App = () => {
       <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen name="Landing" component={Landing} options={{ title: 'Playground' }} />
         <Stack.Screen name="ScrollPicker" component={ScrollPickerPage} />
+        <Stack.Screen name="DropdownMenu" component={DropdownMenuPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

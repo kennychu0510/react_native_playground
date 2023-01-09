@@ -14,6 +14,9 @@ export const Landing = () => {
         <View style={styles.button}>
           <Button onPress={() => navigation.navigate('ScrollPicker')} title="Scroll Picker"></Button>
         </View>
+        <View style={styles.button}>
+          <Button onPress={() => navigation.navigate('DropdownMenu')} title="Dropdown Menu"></Button>
+        </View>
       </View>
     </SafeAreaView>
   );

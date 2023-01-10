@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Button, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { RootStackParamList } from '../App';
 
 type RootScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -16,6 +16,7 @@ export const Landing = () => {
   const navigation = useNavigation<RootScreenNavigationProp>();
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle={'dark-content'}></StatusBar>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {PAGES.map((item, idx) => (
           <View key={idx} style={styles.button}>

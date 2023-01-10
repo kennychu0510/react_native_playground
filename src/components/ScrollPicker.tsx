@@ -70,17 +70,43 @@ export const ScrollPicker = (props: Props) => {
           //   (actualIndex + 1) * ITEM_HEIGHT,
           // ];
           // const inputRangeAdjacent = [(actualIndex - 1) * ITEM_HEIGHT, actualIndex * ITEM_HEIGHT, (actualIndex + 1) * ITEM_HEIGHT]
+          const opacityOutputRange: number[] = [];
+          const MIN_OPACITY = 0.4;
+          const opacityDiff = (1 - MIN_OPACITY) / OFFSET_NUMBER;
+          for (let i = 0; i < OFFSET_NUMBER; i++) {
+            opacityOutputRange.push(MIN_OPACITY + i * opacityDiff);
+          }
+          opacityOutputRange.push(1);
+          for (let i = 1; i <= OFFSET_NUMBER; i++) {
+            opacityOutputRange.push(1 - i * opacityDiff);
+          }
+
           const opacity = scrollY.interpolate({
             inputRange,
-            outputRange: [...new Array(OFFSET_NUMBER).fill(0.4), 1, ...new Array(OFFSET_NUMBER).fill(0.4)],
+            // outputRange: [...new Array(OFFSET_NUMBER).fill(0.4), 1, ...new Array(OFFSET_NUMBER).fill(0.4)],
+            outputRange: opacityOutputRange,
           });
+
+          const fontScaleOutputRange: number[] = [];
+          const MIN_SCALE = 1;
+          const MAX_SCALE = 2;
+          const scaleDiff = (MAX_SCALE - MIN_SCALE) / OFFSET_NUMBER;
+          for (let i = 0; i < OFFSET_NUMBER; i++) {
+            fontScaleOutputRange.push(MIN_OPACITY + i * scaleDiff);
+          }
+          fontScaleOutputRange.push(MAX_SCALE);
+          for (let i = 1; i <= OFFSET_NUMBER; i++) {
+            fontScaleOutputRange.push(MAX_SCALE - i * scaleDiff);
+          }
+
           const fontScale = scrollY.interpolate({
             inputRange,
-            outputRange: [...new Array(OFFSET_NUMBER).fill(1), 2, ...new Array(OFFSET_NUMBER).fill(1)],
+            // outputRange: [...new Array(OFFSET_NUMBER).fill(1), 2, ...new Array(OFFSET_NUMBER).fill(1)],
+            outputRange: fontScaleOutputRange,
           });
 
           const rotationZOutputRange: string[] = [];
-          const MAX_ROTATION = 60;
+          const MAX_ROTATION = 40;
           const rotationDiff = MAX_ROTATION / OFFSET_NUMBER;
           for (let i = 0; i < OFFSET_NUMBER; i++) {
             rotationZOutputRange.push(`${MAX_ROTATION - rotationDiff * i}deg`);

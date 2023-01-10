@@ -92,7 +92,7 @@ export const ScrollPicker = (props: Props) => {
           const MAX_SCALE = 2;
           const scaleDiff = (MAX_SCALE - MIN_SCALE) / OFFSET_NUMBER;
           for (let i = 0; i < OFFSET_NUMBER; i++) {
-            fontScaleOutputRange.push(MIN_OPACITY + i * scaleDiff);
+            fontScaleOutputRange.push(MIN_SCALE + i * scaleDiff);
           }
           fontScaleOutputRange.push(MAX_SCALE);
           for (let i = 1; i <= OFFSET_NUMBER; i++) {

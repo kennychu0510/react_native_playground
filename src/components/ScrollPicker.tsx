@@ -106,7 +106,7 @@ export const ScrollPicker = (props: Props) => {
           });
 
           const rotationZOutputRange: string[] = [];
-          const MAX_ROTATION = 40;
+          const MAX_ROTATION = 50;
           const rotationDiff = MAX_ROTATION / OFFSET_NUMBER;
           for (let i = 0; i < OFFSET_NUMBER; i++) {
             rotationZOutputRange.push(`${MAX_ROTATION - rotationDiff * i}deg`);

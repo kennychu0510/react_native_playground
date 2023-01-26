@@ -1,13 +1,17 @@
 import React, { useState, type PropsWithChildren } from 'react';
 import { Button, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { ScrollPicker } from './components/ScrollPicker';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, NavigationProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScrollPickerPage } from './pages/ScrollPickerPage';
 import { Landing } from './pages/Landing';
 import { DropdownMenuPage } from './pages/DropdownMenuPage';
 import { DragRelease } from './pages/DragRelease';
 import { AnimatedScroll } from './pages/AnimatedScroll';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
+import { onAuthStateChanged } from 'firebase/auth';
+import { Auth } from './firebase';
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -15,11 +19,19 @@ export type RootStackParamList = {
   DropdownMenu: undefined;
   DragRelease: undefined;
   AnimatedScroll: undefined;
+  Login: undefined;
+  Profile: undefined;
 };
+
+export type RootScreenNavigationProp = NavigationProp<RootStackParamList>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
+  const isLoggedIn = Auth.currentUser;
+
+  console.log(isLoggedIn);
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
@@ -28,6 +40,8 @@ const App = () => {
         <Stack.Screen name="DropdownMenu" component={DropdownMenuPage} />
         <Stack.Screen name="DragRelease" component={DragRelease} />
         <Stack.Screen name="AnimatedScroll" component={AnimatedScroll} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -11,6 +11,8 @@ const PAGES = [
   { name: 'Dropdown Menu', component: 'DropdownMenu' as const },
   { name: 'Drag Release', component: 'DragRelease' as const },
   { name: 'Animated Scroll', component: 'AnimatedScroll' as const },
+  { name: 'Login', component: 'Login' as const },
+  { name: 'Profile', component: 'Profile' as const },
 ];
 
 export const Landing = () => {

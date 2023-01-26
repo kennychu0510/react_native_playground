@@ -23,6 +23,10 @@ export default function Profile() {
         {user ? (
           <>
             <View style={styles.row}>
+              <Text style={styles.label}>UID:</Text>
+              <Text>{user.uid}</Text>
+            </View>
+            <View style={styles.row}>
               <Text style={styles.label}>Email:</Text>
               <Text>{user?.email}</Text>
             </View>

@@ -3,6 +3,8 @@ import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-naviga
 import React from 'react';
 import { Button, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { RootStackParamList } from '../App';
+import { Auth } from '../firebase';
+import { Loading } from './Loading';
 
 type RootScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -13,10 +15,28 @@ const PAGES = [
   { name: 'Animated Scroll', component: 'AnimatedScroll' as const },
   { name: 'Login', component: 'Login' as const },
   { name: 'Profile', component: 'Profile' as const },
+  { name: 'Database', component: 'Database' as const },
 ];
 
 export const Landing = () => {
   const navigation = useNavigation<RootScreenNavigationProp>();
+
+  function logout() {
+    Auth.signOut();
+  }
+
+  function login() {
+    navigation.navigate('Login');
+  }
+
+  React.useEffect(() => {
+    // Use `setOptions` to update the button that we previously specified
+    // Now the button includes an `onPress` handler to update the count
+    navigation.setOptions({
+      headerRight: () => (Auth.currentUser ? <Button title="Logout" onPress={logout} /> : <Button title="Login" onPress={login} />),
+    });
+  }, [navigation, Auth.currentUser]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle={'dark-content'}></StatusBar>

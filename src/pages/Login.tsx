@@ -5,11 +5,13 @@ import { Auth } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
 import { RootScreenNavigationProp } from '../App';
 import { StackActions } from '@react-navigation/native';
+import { Loading } from './Loading';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation<RootScreenNavigationProp>();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     /* Redirect to profile page and remove login page in navigation state if already logged in*/
@@ -27,15 +29,19 @@ export default function Login() {
     createUserWithEmailAndPassword(Auth, email, password)
       .then(userCredential => {
         const user = userCredential.user;
-        Alert.alert('Sign up success');
+        // Alert.alert('Sign up success');
       })
       .catch(error => {
         console.log(error.message);
         Alert.alert('Could not sign up', error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   function handleLogin() {
+    setIsLoading(true);
     signInWithEmailAndPassword(Auth, email, password)
       .then(userCredential => {
         const user = userCredential.user;
@@ -43,6 +49,9 @@ export default function Login() {
       .catch(error => {
         console.log(error.message);
         Alert.alert('Could not login', error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -57,6 +66,7 @@ export default function Login() {
       <Button title={'Login'} onPress={handleLogin} />
       <View style={{ marginTop: 5 }} />
       <Button title={'Register'} onPress={handleSignUp} />
+      {isLoading && <Loading />}
     </KeyboardAvoidingView>
   );
 }

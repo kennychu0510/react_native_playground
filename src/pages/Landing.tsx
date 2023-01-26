@@ -20,7 +20,7 @@ export const Landing = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle={'dark-content'}></StatusBar>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start' }}>
         {PAGES.map((item, idx) => (
           <View key={idx} style={styles.button}>
             <Button onPress={() => navigation.navigate(item.component)} title={item.name}></Button>

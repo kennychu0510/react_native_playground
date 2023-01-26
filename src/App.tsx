@@ -12,7 +12,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Auth } from './firebase';
-import Database from './pages/Database';
+import ToDoList from './pages/ToDoList';
 import { Loading } from './pages/Loading';
 
 export type RootStackParamList = {
@@ -23,7 +23,7 @@ export type RootStackParamList = {
   AnimatedScroll: undefined;
   Login: undefined;
   Profile: undefined;
-  Database: undefined;
+  ToDoList: undefined;
 };
 
 export type RootScreenNavigationProp = NavigationProp<RootStackParamList>;
@@ -45,7 +45,7 @@ const App = () => {
         <Stack.Screen name="AnimatedScroll" component={AnimatedScroll} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="Database" component={Database} />
+        <Stack.Screen name="ToDoList" component={ToDoList} />
       </Stack.Navigator>
     </NavigationContainer>
   );

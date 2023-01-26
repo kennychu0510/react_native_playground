@@ -5,7 +5,7 @@ import { onValue, ref, set } from 'firebase/database';
 import { RootScreenNavigationProp } from '../App';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Database() {
+export default function ToDoList() {
   const [data, setData] = useState([]);
   const [item, setItem] = useState('');
   const navigation = useNavigation<RootScreenNavigationProp>();
@@ -27,7 +27,7 @@ export default function Database() {
     // Use `setOptions` to update the button that we previously specified
     // Now the button includes an `onPress` handler to update the count
     navigation.setOptions({
-      headerRight: () => (!isEditMode ? <Button title="Edit" onPress={onEdit} /> : <Button title="Done" onPress={onDone} />),
+      headerRight: () => (Auth.currentUser ? !isEditMode ? <Button title="Edit" onPress={onEdit} /> : <Button title="Done" onPress={onDone} /> : null),
     });
   }, [navigation, Auth.currentUser, isEditMode, data]);
 
@@ -84,6 +84,14 @@ export default function Database() {
 
   function onItemDelete(index: number) {
     setData(data => data.filter((_, idx) => idx !== index));
+  }
+
+  if (!Auth.currentUser) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>You need to login to access this page</Text>
+      </View>
+    );
   }
 
   return (

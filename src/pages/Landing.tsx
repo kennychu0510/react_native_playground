@@ -15,7 +15,7 @@ const PAGES = [
   { name: 'Animated Scroll', component: 'AnimatedScroll' as const },
   { name: 'Login', component: 'Login' as const },
   { name: 'Profile', component: 'Profile' as const },
-  { name: 'Database', component: 'Database' as const },
+  { name: 'Firebase To Do List', component: 'ToDoList' as const },
 ];
 
 export const Landing = () => {

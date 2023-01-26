@@ -1,4 +1,4 @@
-import { Alert, Button, KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Button, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { Auth } from '../firebase';
@@ -8,8 +8,8 @@ import { StackActions } from '@react-navigation/native';
 import { Loading } from './Loading';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('demo@gmail.com');
+  const [password, setPassword] = useState('abc123');
   const navigation = useNavigation<RootScreenNavigationProp>();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +29,7 @@ export default function Login() {
     createUserWithEmailAndPassword(Auth, email, password)
       .then(userCredential => {
         const user = userCredential.user;
-        // Alert.alert('Sign up success');
+        Alert.alert('Sign up success');
       })
       .catch(error => {
         console.log(error.message);
@@ -56,18 +56,22 @@ export default function Login() {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <View style={styles.row}>
-        <TextInput style={styles.input} placeholder={'Username'} value={email} onChangeText={setEmail} autoCapitalize="none" />
-      </View>
-      <View style={styles.row}>
-        <TextInput style={styles.input} placeholder={'Password'} secureTextEntry onChangeText={setPassword} />
-      </View>
-      <Button title={'Login'} onPress={handleLogin} />
-      <View style={{ marginTop: 5 }} />
-      <Button title={'Register'} onPress={handleSignUp} />
-      {isLoading && <Loading />}
-    </KeyboardAvoidingView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={styles.row}>
+            <TextInput style={styles.input} placeholderTextColor="grey" placeholder={'Username'} value={email} onChangeText={setEmail} autoCapitalize="none" />
+          </View>
+          <View style={styles.row}>
+            <TextInput style={styles.input} placeholderTextColor="grey" placeholder={'Password'} secureTextEntry onChangeText={setPassword} />
+          </View>
+          <Button title={'Login'} onPress={handleLogin} />
+          <View style={{ marginTop: 5 }} />
+          <Button title={'Register'} onPress={handleSignUp} />
+        </View>
+        {isLoading && <Loading />}
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 

@@ -22,7 +22,7 @@ export const Landing = () => {
   const navigation = useNavigation<RootScreenNavigationProp>();
 
   function logout() {
-    Auth.signOut();
+    navigation.navigate('Profile');
   }
 
   function login() {
